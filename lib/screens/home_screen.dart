@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:todo/screens/add_task_screen.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  bool today = true, tomorro = false, nexyweek = false;
+  bool suggest = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,6 +33,7 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             decoration: BoxDecoration(
@@ -111,9 +119,141 @@ class HomeScreen extends StatelessWidget {
                       ],
                     ),
                   ),
+                  SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      today
+                          ? Material(
+                              borderRadius: BorderRadius.circular(20),
+                              elevation: 5,
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 20.0, vertical: 5.0),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: Text(
+                                  "Today",
+                                  style: TextStyle(
+                                    fontSize: 20.0,
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            )
+                          : GestureDetector(
+                              onTap: () {
+                                today = true;
+                                tomorro = false;
+                                nexyweek = false;
+                                setState(() {});
+                              },
+                              child: Text(
+                                "Today",
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                      tomorro
+                          ? Material(
+                              borderRadius: BorderRadius.circular(20),
+                              elevation: 5,
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 20.0, vertical: 5.0),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: Text(
+                                  "Tomorrow",
+                                  style: TextStyle(
+                                    fontSize: 20.0,
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            )
+                          : GestureDetector(
+                              onTap: () {
+                                today = false;
+                                tomorro = true;
+                                nexyweek = false;
+                                setState(() {});
+                              },
+                              child: Text(
+                                "Tomorrow",
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                      nexyweek
+                          ? Material(
+                              borderRadius: BorderRadius.circular(20),
+                              elevation: 5,
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 20.0, vertical: 5.0),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: Text(
+                                  "Next Week",
+                                  style: TextStyle(
+                                    fontSize: 20.0,
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            )
+                          : GestureDetector(
+                              onTap: () {
+                                today = false;
+                                tomorro = false;
+                                nexyweek = true;
+                                setState(() {});
+                              },
+                              child: Text(
+                                "Next Week",
+                                style: TextStyle(
+                                  fontSize: 18.0,
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                    ],
+                  ),
                 ],
               ),
             ),
+          ),
+          CheckboxListTile(
+            activeColor: Colors.black,
+            title: Text(
+              "Reading",
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 25,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+            value: suggest,
+            onChanged: (val) {
+              setState(() {
+                suggest = val!;
+              });
+            },
+            controlAffinity: ListTileControlAffinity.leading,
           ),
         ],
       ),
